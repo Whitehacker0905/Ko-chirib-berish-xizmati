@@ -39,12 +39,3 @@ body{
     margin-top: 20px;
     padding: 10px;
 }
-.cancel{
-    background-color: red;
-    color: white;
-}
-.cancel :hover{
-  background-color: white;
-  border-radius: 10%;
-  color:black;
-}

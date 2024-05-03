@@ -73,7 +73,6 @@ if (isset($_POST['Royhatdan_otish'])) {
   </div>
   <div>
   <input type="submit" value="Sign in" id="button" name="Royhatdan_otish">
-  <a href="index.php" class="cancel">cancel</a>
   </div>
 </form>
 <br><br>

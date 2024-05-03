@@ -1,16 +1,17 @@
 <?php
 include "baza_ulash.php";
+$id=$_GET['id'];
 
 if (isset($_POST['buyyurtma'])) {
+    
     $massa= $_POST['massa'];
     $hajmi= $_POST['hajmi']; 
     $qayerdan= $_POST['qayerdan'];
     $qayerga= $_POST['qayerga'];
     $narx= $_POST['narx']; 
     $sharh= $_POST['sharh'];
-    $sql = "INSERT INTO `buyurtma` (`massa`, `hajmi`, `qayerdan`, `qayerga`, `narx`, `sharh`) VALUES ('$massa', '$hajmi', '$qayerdan', '$qayerga', '$narx', '$sharh')";
-
-    $result = mysqli_query($ulanish, $sql);
+    $sql = "UPDATE `buyurtma` SET ``massa`='$massa',`hajmi`='$hajmi',`qayerdan`='$qayerdan',`qayerga`='$qayerga',`narx`='$narx',`sharh`='$sharh' WHERE id=$id";
+    $result=mysqli_query($ulanish,$sql);
 
     if ($result) {
         header("Location:  Buyurtma berish.php");
@@ -54,7 +55,7 @@ if (isset($_POST['buyyurtma'])) {
     </div>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
-        <a class="navbar-brand" href="Kochirib berish.html"><b>Asosiy bo'limga qaytish</b></a>
+        <a class="navbar-brand" href="Buyurtma berish.html"><b>Asosiy bo'limga qaytish</b></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -69,20 +70,24 @@ if (isset($_POST['buyyurtma'])) {
       </div>
     </nav>
   </header>
+  <?php
+   $sql="SELECT * FROM `buyurtma` WHERE id=$id LIMIT 1";
+   $result=mysqli_query($ulanish,$sql);
+   $row=mysqli_fetch_assoc($result);
+  ?>
   <center>
-    <h3>Buyurtma berish</h3>
   <form action="" class="Buyurtma" method="post">
     <label for="massa" >Buyurtma massasi:</label>
-    <input type="number" name="massa" id="massa" placeholder="kg:" required>
+    <input type="number" name="massa" id="massa" placeholder="kg:" value="<?php echo $row['massa']?>" required>
     <label for="hajmi">Buyurtma hajmi:</label>
-    <input type="number" name="hajmi" id="hajmi" placeholder="dm^3" required><br><br>
-    <select id="from" name="qayerdan" required>
+    <input type="number" name="hajmi" id="hajmi" placeholder="dm^3" value="<?php echo $row['hajmi']?>" required><br><br>
+    <select id="from" name="qayerdan" value="<?php echo $row['qayerdan']?>" required>
         <option selected disabled value="">Jo'natilayotgan joy:</option>
         <option>Xiva</option>
         <option>Urganch</option>
         <option>Toshkent</option>
     </select>
-    <select id="to" name="qayerga" required>
+    <select id="to" name="qayerga" value="<?php echo $row['qayerga']?>" required>
         <option selected disabled value="">Yuborilayotgan joy:</option>
         <option>Xiva</option>
         <option>Urganch</option>
@@ -90,54 +95,13 @@ if (isset($_POST['buyyurtma'])) {
     </select><br>
     
     <label for="narx">Narxi:</label>
-    <p type="text" id="nn"  name="narx">0 ming sum</p>
+    <p type="text" id="nn"  name="narx" value="<?php echo $row['narx']?>">0 ming sum</p>
     <label for="comment" >Sharh:</label>
-    <input type="text" name="sharh" id="comment" placeholder="..." required>
+    <input type="text" name="sharh" id="comment" value="<?php echo $row['sharh']?>" required>
     <button type="button" id="teshkirish" onclick="narxi()">teshkirish</button>
-    <input type="submit" class="buyurt" value="Buyurtma qilish" name="buyyurtma" onclick="qabul()">
+    <input type="submit" class="buyurt" value="To'g'irlash" name="buyyurtma" onclick="to_girla()">
   </form>
   </center>
-  <section class="jadval">
-    <h3>Maxsulotlar tarixi</h3>
-  <div>
-    <table class="container">
-      <thead style=" border: 3px solid rgb(13, 13, 69);">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">massa</th>
-          <th scope="col">hajm</th>
-          <th scope="col">qayerdan</th>
-          <th scope="col">qayerga</th>
-          <th scope="col">narx</th>
-          <th scope="col">sharh</th>
-          <th scope="col">To'g'irlash</th>
-        </tr>
-      </thead>
-      <tbody style=" border: 3px solid rgb(13, 13, 69);">
-        <?php
-          $sqll="SELECT * FROM `buyurtma`";
-          $res=mysqli_query($ulanish,$sqll);
-          while($row=mysqli_fetch_assoc($res)){
-            ?>
-            <tr>
-          <th><?php echo $row['id']?></th>
-          <th><?php echo $row['massa']?></th>
-          <th><?php echo $row['hajmi']?></th>
-          <th><?php echo $row['qayerdan']?></th>
-          <th><?php echo $row['qayerga']?></th>
-          <th><?php echo $row['narx']?></th>
-          <th><?php echo $row['sharh']?></th>
-          <td>
-            <a href="To'g'irlash.php">update</a>
-          </td>
-        </tr>
-            <?php
-          }
-        ?>
-      </tbody>
-    </table>
-  </div>
-  </section>
   <footer id="footer">
     <div>
       <h2>bog'lanish uchun</h2>

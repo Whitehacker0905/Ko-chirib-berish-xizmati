@@ -67,3 +67,6 @@ function xiva(){
    function qabul(){
     alert("Buyurtma qabul qilindi!");
    }
+   function to_girla(){
+    alert("Malumot yangilandi!");
+   }
